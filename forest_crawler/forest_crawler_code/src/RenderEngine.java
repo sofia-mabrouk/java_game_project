@@ -14,8 +14,8 @@ public class RenderEngine extends JPanel implements Runnable{
     public final int screenHeight = maxScreenRow  * tileSize; /*Screen size is 1024x768*/
 
     /*World settings*/
-    public final int maxWorldCol = 40;
-    public final int maxWorldRow = 40;
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
     public final int worldWidth = maxWorldCol * tileSize;
     public final int worldHeight = maxWorldRow * tileSize;
 
@@ -84,6 +84,7 @@ public class RenderEngine extends JPanel implements Runnable{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
+        //tileM.draw(g2, false, true);
         tileM.draw(g2, false);
         player.draw(g2);
         tileM.draw(g2, true);

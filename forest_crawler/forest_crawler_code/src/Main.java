@@ -15,7 +15,7 @@ public class Main {
         window.add(renderEngine);
         window.pack(); /*Necessary line to see the window*/
 
-        window.setLocationRelativeTo(null );
+        window.setLocationRelativeTo(null);
         window.setVisible(true);
 
         renderEngine.startGameThread();

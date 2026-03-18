@@ -26,8 +26,8 @@ public class Player extends Sprite {
     }
 
     public void setDefaultValues(){
-         worldX=  re.tileSize * 23;
-         worldY = re.tileSize * 21 ;
+         worldX=  re.tileSize * 27;
+         worldY = re.tileSize * 25 ;
          speed=4;
          direction="down";
     }

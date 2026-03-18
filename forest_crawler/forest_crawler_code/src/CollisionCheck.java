@@ -17,40 +17,54 @@ public class CollisionCheck {
         int spriteTopRow = spriteTopWorldY/re.tileSize;
         int spriteBottomRow = spriteBottomWorldY/re.tileSize;
 
-        int tileNum1, tileNum2;
+        int tileBottomNum1, tileBottomNum2, tileTopNum1, tileTopNum2;
 
         switch(sprite.direction){
             case "up":
                 spriteTopRow = (spriteTopWorldY - sprite.speed) / re.tileSize;
-                tileNum1 =  re.tileM.mapTileNum[spriteLeftCol][spriteTopRow];
-                tileNum2 =  re.tileM.mapTileNum[spriteRightCol][spriteTopRow];
+                tileBottomNum1 =  re.tileM.mapBottomNum[spriteLeftCol][spriteTopRow];
+                tileBottomNum2 =  re.tileM.mapBottomNum[spriteRightCol][spriteTopRow];
+                tileTopNum1 =  re.tileM.mapTopNum[spriteLeftCol][spriteTopRow];
+                tileTopNum2 =  re.tileM.mapTopNum[spriteRightCol][spriteTopRow];
 
-                if(re.tileM.tile[tileNum1].collision == true || re.tileM.tile[tileNum2].collision == true) {
+                if(re.tileM.tile[tileBottomNum1].collision == true || re.tileM.tile[tileBottomNum2].collision == true ||
+                        re.tileM.tile[tileTopNum1].collision == true || re.tileM.tile[tileTopNum2].collision == true) {
                     sprite.collisionOn = true;
                 }
                 break;
             case "down":
                 spriteBottomRow = (spriteBottomWorldY + sprite.speed) / re.tileSize;
-                tileNum1 =  re.tileM.mapTileNum[spriteLeftCol][spriteBottomRow];
-                tileNum2 =  re.tileM.mapTileNum[spriteRightCol][spriteBottomRow];
+                tileBottomNum1 =  re.tileM.mapBottomNum[spriteLeftCol][spriteBottomRow];
+                tileBottomNum2 =  re.tileM.mapBottomNum[spriteRightCol][spriteBottomRow];
+                tileTopNum1 =  re.tileM.mapTopNum[spriteLeftCol][spriteBottomRow];
+                tileTopNum2 =  re.tileM.mapTopNum[spriteRightCol][spriteBottomRow];
 
-                if(re.tileM.tile[tileNum1].collision == true || re.tileM.tile[tileNum2].collision == true) {
+                if(re.tileM.tile[tileBottomNum1].collision == true || re.tileM.tile[tileBottomNum2].collision == true ||
+                        re.tileM.tile[tileTopNum1].collision == true || re.tileM.tile[tileTopNum2].collision == true) {
                     sprite.collisionOn = true;
                 }
                 break;
             case "left":
                 spriteLeftCol = (spriteLeftWorldX - sprite.speed) / re.tileSize;
-                tileNum1 = re.tileM.mapTileNum[spriteLeftCol][spriteTopRow];
-                tileNum2 = re.tileM.mapTileNum[spriteLeftCol][spriteBottomRow];
-                if(re.tileM.tile[tileNum1].collision || re.tileM.tile[tileNum2].collision) {
+                tileBottomNum1 = re.tileM.mapBottomNum[spriteLeftCol][spriteTopRow];
+                tileBottomNum2 = re.tileM.mapBottomNum[spriteLeftCol][spriteBottomRow];
+                tileTopNum1 = re.tileM.mapTopNum[spriteLeftCol][spriteTopRow];
+                tileTopNum2 = re.tileM.mapTopNum[spriteLeftCol][spriteBottomRow];
+
+                if(re.tileM.tile[tileBottomNum1].collision || re.tileM.tile[tileBottomNum2].collision ||
+                        re.tileM.tile[tileTopNum1].collision || re.tileM.tile[tileTopNum2].collision) {
                     sprite.collisionOn = true;
                 }
                 break;
             case "right":
                 spriteRightCol = (spriteRightWorldX + sprite.speed) / re.tileSize;
-                tileNum1 = re.tileM.mapTileNum[spriteRightCol][spriteTopRow];
-                tileNum2 = re.tileM.mapTileNum[spriteRightCol][spriteBottomRow];
-                if(re.tileM.tile[tileNum1].collision || re.tileM.tile[tileNum2].collision) {
+                tileBottomNum1 = re.tileM.mapBottomNum[spriteRightCol][spriteTopRow];
+                tileBottomNum2 = re.tileM.mapBottomNum[spriteRightCol][spriteBottomRow];
+                tileTopNum1 = re.tileM.mapTopNum[spriteRightCol][spriteTopRow];
+                tileTopNum2 = re.tileM.mapTopNum[spriteRightCol][spriteBottomRow];
+
+                if(re.tileM.tile[tileBottomNum1].collision || re.tileM.tile[tileBottomNum2].collision ||
+                        re.tileM.tile[tileTopNum1].collision || re.tileM.tile[tileTopNum2].collision) {
                     sprite.collisionOn = true;
                 }
                 break;
