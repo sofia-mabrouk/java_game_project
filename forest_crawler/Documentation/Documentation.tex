@@ -1,0 +1,251 @@
+\documentclass[11pt,a4paper,french]{article}
+
+%---------------------------
+% Packages
+%---------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{mathrsfs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{graphicx} % Insertion d'images
+\usepackage{interval} 
+
+%---------------------------
+% Marges
+%---------------------------
+\geometry{top=2.5cm, bottom=2.5cm, left=1.5cm, right=1.5cm}
+
+%---------------------------
+% Style de page
+%---------------------------
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{\leftmark}
+\fancyfoot[C]{\thepage}
+
+%---------------------------
+% Style des titres
+%---------------------------
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\small\bfseries}{\thesubsubsection}{1em}{}
+
+%---------------------------
+% Liens
+%---------------------------
+\hypersetup{
+    colorlinks=false,
+    linkcolor=red,
+    urlcolor=blue,
+    pdftitle={Documentation}, % À modifier
+    pdfauthor={},
+    pdfsubject={},
+    pdfkeywords={},
+}
+
+%---------------------------
+% Environnement
+%---------------------------
+
+\renewcommand{\b}[1]{\textbf{#1}}
+\newcommand{\sautligne}{\vspace{0.5cm}}
+
+\newcommand{\image}[2]{\begin{center} \includegraphics[width=#2cm]{./img/#1.png}\end{center}}
+
+\newcommand{\test}{\b{question test}}
+
+%---------------------------
+% Début du document
+%---------------------------
+\begin{document}
+
+\begin{titlepage}
+    
+    % --- Logo ---
+    \begin{minipage}{0.20\textwidth}
+        \image{logo_ensea}{7}
+    \end{minipage}
+    \vspace{4cm}
+
+    \centering
+
+    % --- Titre ---
+    \hrule height 2pt
+    \vspace{0.8cm}
+    \begin{center}
+        {\Huge \textbf{Forest Crawler - Documentation}}\\
+        \vspace{0.3cm}
+        {\Large } % À remplir
+    \end{center}
+    \vspace{0.8cm}
+    \hrule height 2pt
+
+    \vspace{2.5cm}
+
+    % --- Informations ---
+    {\large MABROUK Sofia, SAYAVONG Melvin} 
+
+    \vspace{1cm}
+
+    {\large ENSEA, 2025 - 2026, Semestre 6}
+
+    \vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Présentation}
+
+\section{Class Main (peut-être continuer)}
+\noindent La classe Main est la classe permettant d'exécuter tout le jeu, il s'occupe principalement de la gestion de la fenêtre.
+\image{Pasted Image}{10}
+Cette partie du code correspond aux paramètres de la fenêtre:
+\begin{itemize}
+    \item \verb|window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE):| permet de déterminer le comportement du bouton de fermeture de la fenêtre.
+    \item \verb|window.setResizable(false):| permet de savoir si la taille de la fenêtre est modifiable ou non.
+    \item \verb|window.setTitle("Forest Crawler"):| correspond au nom de la fenêtre.
+\end{itemize}
+
+\section{Class Game Engine}
+Cette classe s'occupe de la gestion du comportement des touches à l'aide d'un listener. Elle sert uniquement à configurer les touches pour le déplacement du joueur. 
+\subsection{Variables}
+Cette classe permet de gérer le comportement des touches du clavier à l'aide d'un listener. 
+Dans notre cas, on utilise les touches du clavier uniquement pour se déplacer donc on créé 4 variables booléennes :
+\begin{itemize}
+    \item \verb|upPressed| 
+    \item \verb|downPressed| 
+    \item \verb|leftPressed| 
+    \item \verb|rightPressed| 
+\end{itemize}
+
+\subsection{keyTyped}
+\image{keyTyped}{7}
+Cette méthode permet de savoir si une touche a été appuyé puis relâché. Elle ne sert pas pour ce projet, mais est 
+automatiquement créée par IntelliJ dans la classe KeyListener (qui est implémentée par GameEngine) avec keyPressed et keyReleased.
+
+\subsection{keyPressed}
+\image{keyPressed}{7}
+Cette méthode permet de savoir si les touches liées au déplacement ont été appuyé.
+
+\subsection{keyReleased}
+\image{keyReleased}{7}
+Cette méthode permet de savoir si les touches liées au déplacement ont été relâché.
+
+\section{RenderEngine}
+
+Cette classe correspond à la configuration du rendu du jeu au sein de la fenêtre comme la taille des éléments du jeu.
+Ce rendu dépend de deux groupes de paramètres de position: \verb|screenXXX|, une position relative à la fenêtre de jeu, et 
+\verb|worldXXX|, une position par relative à la map du jeu, qui est 'out of bounds' de l'écran.
+\subsection{Variables}
+
+\subsubsection{Screen settings}
+Voici la liste des différentes variables pour cette section:
+\begin{itemize}
+    \item \verb|originalTileSize| : Taille réelle des cases
+    \item \verb|scale| : Échelle d'agrandissement
+    \item \verb|tileSize| : Taille des cases lors de l'affichage
+    \item \verb|maxScreenCol| : Nombre de colonnes affichées sur la fenêtre de jeu
+    \item \verb|maxScreenRow| : Nombre de lignes affichées sur la fenêtre de jeu
+    \item \verb|screenWidth| : Longueur de la fenêtre de jeu
+    \item \verb|screenHeight| : Hauteur de la fenêtre de jeu
+\end{itemize}
+
+\subsubsection{World settings}
+Voici la liste des différentes variables pour cette section:
+\begin{itemize}
+    \item \verb|maxWorldCol| : Nombre de colonnes de la map de jeu
+    \item \verb|maxWorldRow| : Nombre de lignes de la map de jeu
+    \item \verb|worldWidth| : Longueur maximum de la carte affichée
+    \item \verb|worldHeight| : Hauteur maximum de la carte affichée
+\end{itemize}
+
+\subsubsection{FPS}
+La variable \verb|FPS| correspond au nombre d'images par secondes.
+
+\subsection{RenderEngine}
+\image{RenderEngine}{15}
+Cette méthode permet de définir les différents paramètres de la fenêtre.
+
+\subsection{startGameThread}
+\image{startGameThread}{10}
+Cette méthode permet d'initialiser le thread pour le jeu.
+
+\section{Class Player}
+Cette classe permet de gérer tous les attributs et comportements liés au joueur comme sa position, son déplacement ou son sprite.
+
+\subsection{Variables (description + à compléter)}
+\begin{itemize}
+    \item \verb|RenderEngine re|: instance de RenderEngine
+    \item \verb|GameEngine keyH|: instance de GameEngine
+    \item \verb|screenX|: position X du joueur sur la carte.
+    \item \verb|screenY|: position Y du joueur sur la carte.
+\end{itemize}
+
+\subsection{Player}
+
+\image{PlayerConstructor}{10}
+Cette méthode correspond au constructeur de l'objet Player
+
+\begin{itemize}
+    \item \verb|solidArea| : Rectangle placé sur le joueur, qui sert de zone de collision (cf. CollisionCheck)
+    \item \verb|screenX, screenY| : Positionnement du joueur au centre de la fenêtre de jeu
+\end{itemize}
+
+\subsection{setDefaultValues}
+\image{setDefaultValues}{10}
+Cette méthode permet de définir les valeurs par défaut lorsqu'on lance le jeu.
+
+\subsection{getPlayerImage}
+\image{getPlayerImage}{15}
+Cette méthode permet de chercher les sprites du joueur en fonction de sa direction. Il y a 2 sprites par direction pour donner l'illusion du mouvement lors du déplacement.
+
+\subsection{update (mettre image)}
+Cette méthode permet de vérifier à tout instant les évènements de déplacement et de collision ainsi que de mettre à jour le sprite.
+
+\subsection{draw (mettre une image)}
+Cette méthode permet de mettre à jour la bonne image en fonction de la direction, en animant le mouvement.
+
+\section{Class Sprite}
+Cette classe permet de configurer le comportement des sprites.
+\image{sprite}{12}
+Voici la description des différentes variables:
+\begin{itemize}
+    \item \verb|worldX, worldY| : Position X et Y du sprite sur la carte
+    \item \verb|speed| : Vitesse du sprite sur la carte
+    \item \verb|up, down, right, left, idle| : Variables permettant d'utiliser les bonnes images en fonction de la direction
+    \item \verb|direction| : Direction du sprite parmis [up, down, left, right]
+    \item \verb|spriteCounter| : Compteur permettant d'actualiser les images pour l'animation
+    \item \verb|spriteNumber| : Permet de basculer entre les différentes images lors d'une animation
+    \item \verb|solidArea| : Hitbox du sprite
+    \item \verb|collisionOn| : Activation de la collision
+\end{itemize}
+
+\section{Class CollisionCheck}
+Cette classe permet de faire la gestion des collisions avec les différents sprite.
+
+\subsection{CollisionCheck}
+Constructeur pour définir le RenderEngine.
+
+\subsection{checkTile (à faire)}
+
+\section{Tile}
+Cette classe permet de gérer l'affichage des cases ainsi que le comportement de celle-ci vis-à-vis du joueur. 
+La class Tile contient 4 variables:
+\begin{itemize}
+    \item \verb|image| : prends l'image correspondante
+    \item \verb|collision| : Permet de définir si l'image devra être une collision ou non
+    \item \verb|isOverhead| : Permet de définir si l'image devra être au dessus du joueur ou non, (cf. méthode draw de TileManager)
+    \item \verb|width, height| : Définit la taille de la case
+\end{itemize}
+
+\section{TileManager (à faire)}
+
+\end{document}
