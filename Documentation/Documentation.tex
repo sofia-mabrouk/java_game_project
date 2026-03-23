@@ -1,0 +1,742 @@
+\documentclass[11pt,a4paper,french]{article}
+
+%---------------------------
+% Packages
+%---------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{mathrsfs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{graphicx} % Insertion d'images
+\usepackage{interval} 
+\usepackage{listings}
+\usepackage{xcolor}
+
+%---------------------------
+% Marges
+%---------------------------
+\geometry{top=2.5cm, bottom=2.5cm, left=1.5cm, right=1.5cm}
+
+%---------------------------
+% Style de page
+%---------------------------
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{\leftmark}
+\fancyfoot[C]{\thepage}
+
+%---------------------------
+% Style des titres
+%---------------------------
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\small\bfseries}{\thesubsubsection}{1em}{}
+
+%---------------------------
+% Liens
+%---------------------------
+\hypersetup{
+    colorlinks=false,
+    linkcolor=red,
+    urlcolor=blue,
+    pdftitle={Documentation}, % À modifier
+    pdfauthor={},
+    pdfsubject={},
+    pdfkeywords={},
+}
+
+%---------------------------
+% Environnement
+%---------------------------
+
+\renewcommand{\b}[1]{\textbf{#1}}
+\newcommand{\sautligne}{\vspace{0.5cm}}
+
+\newcommand{\image}[2]{\begin{center} \includegraphics[width=#2cm]{./img/#1.png}\end{center}}
+
+\newcommand{\test}{\b{question test}}
+
+\definecolor{monoBackground}{RGB}{250, 250, 250} % Gris très clair
+\definecolor{monoText}{RGB}{50, 50, 50}          % Presque noir
+\definecolor{monoKeyword}{RGB}{0, 100, 200}      % Bleu doux
+\definecolor{monoComment}{RGB}{150, 150, 150}    % Gris clair
+\definecolor{monoString}{RGB}{40, 150, 80}       % Vert discret
+\definecolor{monoNumber}{RGB}{120, 120, 120}     % Numéros de ligne discrets
+
+\lstdefinestyle{minimalist}{
+    backgroundcolor=\color{monoBackground},
+    basicstyle=\ttfamily\small\color{monoText},
+    breaklines=true,
+    captionpos=t,              % Légende au-dessus
+    commentstyle=\itshape\color{monoComment},
+    keywordstyle=\bfseries\color{monoKeyword},
+    stringstyle=\color{monoString},
+    numbers=left,              % Numéros à gauche
+    numberstyle=\tiny\color{monoNumber},
+    numbersep=15pt,            % Plus d'espace pour respirer
+    xleftmargin=20pt,          % Marge à gauche
+    frame=t,                   % Ligne fine uniquement en haut
+    framerule=0.5pt,
+    rulecolor=\color{monoNumber!30},
+    showstringspaces=false,
+    tabsize=2,
+    aboveskip=20pt,            % Espace avant le bloc
+    belowskip=20pt             % Espace après le bloc
+}
+
+\lstset{style=minimalist}
+
+%---------------------------
+% Début du document
+%---------------------------
+\begin{document}
+
+\begin{titlepage}
+    
+    % --- Logo ---
+    \begin{minipage}{0.20\textwidth}
+        \includegraphics[width=\textwidth]{./img/logo_ensea.png}
+    \end{minipage}
+    \vspace{4cm}
+
+    \centering
+
+    % --- Titre ---
+    \hrule height 2pt
+    \vspace{0.8cm}
+    \begin{center}
+        {\Huge \textbf{Forest Crawler - Documentation}}\\
+        \vspace{0.3cm}
+        {\Large } % À remplir
+    \end{center}
+    \vspace{0.8cm}
+    \hrule height 2pt
+
+    \vspace{2.5cm}
+
+    % --- Informations ---
+    {\large MABROUK Sofia, SAYAVONG Melvin} 
+
+    \vspace{1cm}
+
+    {\large ENSEA, 2025 - 2026, Semestre 6}
+
+    \vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Présentation}
+
+\section{Class Main}
+\noindent La classe Main est la classe permettant d'exécuter tout le jeu, il s'occupe principalement de la gestion de la fenêtre.
+\begin{lstlisting}[language=Java]
+    JFrame window = new JFrame();
+    window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    window.setResizable(false);
+    window.setTitle("Forest Crawler");
+\end{lstlisting}
+Cette partie du code correspond aux paramètres de la fenêtre:
+\begin{itemize}
+    \item \verb|window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE):| permet de déterminer le comportement du bouton de fermeture de la fenêtre.
+    \item \verb|window.setResizable(false):| permet de savoir si la taille de la fenêtre est modifiable ou non.
+    \item \verb|window.setTitle("Forest Crawler"):| correspond au nom de la fenêtre.
+\end{itemize}
+
+\section{Class Game Engine}
+Cette classe s'occupe de la gestion du comportement des touches à l'aide d'un listener. Elle sert uniquement à configurer les touches pour le déplacement du joueur. 
+\subsection{Variables}
+Cette classe permet de gérer le comportement des touches du clavier à l'aide d'un listener. 
+Dans notre cas, on utilise les touches du clavier uniquement pour se déplacer donc on créé 4 variables booléennes :
+\begin{itemize}
+    \item \verb|upPressed| 
+    \item \verb|downPressed| 
+    \item \verb|leftPressed| 
+    \item \verb|rightPressed| 
+\end{itemize}
+
+\subsection{keyTyped}
+\begin{lstlisting}[language=Java]
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+
+    }
+\end{lstlisting}
+Cette méthode permet de savoir si une touche a été appuyé puis relâché. Elle ne sert pas pour ce projet, mais est 
+automatiquement créée par IntelliJ dans la classe KeyListener (qui est implémentée par GameEngine) avec keyPressed et keyReleased.
+\newpage
+\subsection{keyPressed}
+\begin{lstlisting}[language=Java]
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+        int code = keyEvent.getKeyCode();
+
+        if(code == KeyEvent.VK_Z){
+            upPressed = true;
+        }
+        if(code == KeyEvent.VK_Q){
+            leftPressed = true;
+        }
+        if(code == KeyEvent.VK_S){
+            downPressed = true;
+        }
+        if(code == KeyEvent.VK_D){
+            rightPressed = true;
+        }
+    }
+\end{lstlisting}
+Cette méthode permet de savoir si les touches liées au déplacement ont été appuyé.
+
+\subsection{keyReleased}
+\begin{lstlisting}[language=Java]
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+        int code = keyEvent.getKeyCode();
+        if(code == KeyEvent.VK_Z){
+            upPressed = false;
+        }
+        if(code == KeyEvent.VK_Q){
+            leftPressed = false;
+        }
+        if(code == KeyEvent.VK_S){
+            downPressed = false;
+        }
+        if(code == KeyEvent.VK_D){
+            rightPressed = false;
+        }
+    }
+\end{lstlisting}
+Cette méthode permet de savoir si les touches liées au déplacement ont été relâché.
+
+\section{RenderEngine}
+
+Cette classe correspond à la configuration du rendu du jeu au sein de la fenêtre comme la taille des éléments du jeu.
+Ce rendu dépend de deux groupes de paramètres de position: \verb|screenXXX|, une position relative à la fenêtre de jeu, et 
+\verb|worldXXX|, une position par relative à la map du jeu, qui est 'out of bounds' de l'écran.
+\subsection{Variables}
+
+\subsubsection{Screen settings}
+Voici la liste des différentes variables pour cette section:
+\begin{itemize}
+    \item \verb|originalTileSize| : Taille réelle des cases
+    \item \verb|scale| : Échelle d'agrandissement
+    \item \verb|tileSize| : Taille des cases lors de l'affichage
+    \item \verb|maxScreenCol| : Nombre de colonnes affichées sur la fenêtre de jeu
+    \item \verb|maxScreenRow| : Nombre de lignes affichées sur la fenêtre de jeu
+    \item \verb|screenWidth| : Longueur de la fenêtre de jeu
+    \item \verb|screenHeight| : Hauteur de la fenêtre de jeu
+\end{itemize}
+
+\subsubsection{World settings}
+Voici la liste des différentes variables pour cette section:
+\begin{itemize}
+    \item \verb|maxWorldCol| : Nombre de colonnes de la map de jeu
+    \item \verb|maxWorldRow| : Nombre de lignes de la map de jeu
+    \item \verb|worldWidth| : Longueur maximum de la carte affichée
+    \item \verb|worldHeight| : Hauteur maximum de la carte affichée
+\end{itemize}
+
+\subsubsection{FPS}
+La variable \verb|FPS| correspond au nombre d'images par secondes.
+
+\subsection{RenderEngine}
+\begin{lstlisting}[language=Java]
+    public RenderEngine(){
+        this.setPreferredSize(new Dimension(screenWidth , screenHeight));
+        this.setBackground(Color.decode("#55af32"));
+        this.setDoubleBuffered(true);
+        this.addKeyListener(keyH);
+        this.setFocusable(true );
+    }
+\end{lstlisting}
+Cette méthode permet de définir les différents paramètres de la fenêtre.
+
+\subsection{startGameThread}
+\begin{lstlisting}[language=Java]
+    public void startGameThread(){
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+\end{lstlisting}
+Cette méthode permet d'initialiser le thread pour le jeu.
+
+\section{Class Player}
+Cette classe permet de gérer tous les attributs et comportements liés au joueur comme sa position, son déplacement ou son sprite.
+
+\subsection{Variables (description)}
+\begin{itemize}
+    \item \verb|RenderEngine re|: instance de RenderEngine
+    \item \verb|GameEngine keyH|: instance de GameEngine
+    \item \verb|screenX|: position X du joueur sur la carte.
+    \item \verb|screenY|: position Y du joueur sur la carte.
+\end{itemize}
+
+\subsection{Player}
+
+\begin{lstlisting}[language=Java]
+    public Player(RenderEngine re, GameEngine keyH) {
+         this.re = re;
+         this.keyH = keyH;
+
+         screenX = re.screenWidth/2 - re.tileSize/2;
+         screenY = re.screenHeight/2 - re.tileSize/2;
+
+         //solidArea = new Rectangle(1/(6 * re.tileSize), 1/(3* re.tileSize), 2/(3 * re.tileSize), 2/(3 * re.tileSize));
+        solidArea = new Rectangle(16, 30, 32, 32);
+
+         setDefaultValues();
+         getPlayerImage();
+    }
+\end{lstlisting}
+Cette méthode correspond au constructeur de l'objet Player
+
+\begin{itemize}
+    \item \verb|solidArea| : Rectangle placé sur le joueur, qui sert de zone de collision (cf. CollisionCheck)
+    \item \verb|screenX, screenY| : Positionnement du joueur au centre de la fenêtre de jeu
+\end{itemize}
+
+\subsection{setDefaultValues}
+\begin{lstlisting}[language=Java]
+    public void setDefaultValues(){
+         worldX=  re.tileSize * 27;
+         worldY = re.tileSize * 25 ;
+         speed=4;
+         direction="down";
+    }
+\end{lstlisting}
+Cette méthode permet de définir les valeurs par défaut lorsqu'on lance le jeu.
+
+\subsection{getPlayerImage}
+\begin{lstlisting}[language=Java]
+    public void getPlayerImage(){
+        try{
+            up1 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_z_walk1.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_z_walk2.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_s_walk1.png"));
+            down2= ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_s_walk2.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_d_walk1.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_d_walk2.png"));
+            left1 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_q_walk1.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_q_walk2.png"));
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+\end{lstlisting}
+Cette méthode permet de chercher les sprites du joueur en fonction de sa direction. Il y a 2 sprites par direction pour donner l'illusion du mouvement lors du déplacement.
+
+\subsection{update}
+Cette méthode permet de vérifier à tout instant les évènements de déplacement et de collision ainsi que la mise à jour du sprite.
+\begin{lstlisting}[language=Java]
+    public void update(){
+        if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+
+            if (keyH.upPressed) {
+                direction = "up";
+            }
+            if (keyH.downPressed) {
+                direction = "down";
+            }
+            if (keyH.leftPressed) {
+                direction = "left";
+            }
+            if (keyH.rightPressed) {
+                direction = "right";
+            }
+
+            /* Check tile collision*/
+            collisionOn = false;
+            re.cCheck.checkTile(this);
+            if (collisionOn == false) {
+                switch (direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
+            }
+
+            spriteCounter++;
+            if (spriteCounter > 10) {
+                if (spriteNumber == 1) {
+                    spriteNumber = 2;
+                } else if (spriteNumber == 2) {
+                    spriteNumber = 1;
+                }
+                spriteCounter = 0;
+            }
+
+        }
+    }
+\end{lstlisting}
+
+
+\subsection{draw}
+Cette méthode permet de mettre à jour la bonne image en fonction de la direction, en animant le mouvement.
+\begin{lstlisting}[language=Java]
+    public void draw(Graphics2D g2 ){
+        //g2.setColor(Color.white);
+        //g2.fillRect(x, y , re.tileSize, re.tileSize);
+        BufferedImage image = null;
+
+        switch(direction) {
+            case "up":
+                if (spriteNumber == 1){
+                    image = up1;
+                }
+                if (spriteNumber == 2){
+                    image = up2;
+                }
+                break;
+            case "down":
+                if (spriteNumber == 1){
+                    image = down1;
+                }
+                if (spriteNumber == 2){
+                    image = down2;
+                }
+                break;
+            case "right":
+                if (spriteNumber == 1){
+                    image = right1;
+                }
+                if (spriteNumber == 2){
+                    image = right2;
+                }
+                break;
+            case "left":
+                if (spriteNumber == 1){
+                    image = left1;
+                }
+                if (spriteNumber == 2){
+                    image = left2 ;
+                }
+                break;
+        }
+
+        g2.drawImage(image, screenX, screenY, re.tileSize, re.tileSize, null);
+
+        // DEBUG: Draw the Hitbox
+        g2.setColor(Color.RED);
+        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+    }
+\end{lstlisting}
+
+
+\section{Class Sprite}
+Cette classe permet de configurer le comportement des sprites.
+\begin{lstlisting}[language=Java]
+    public class Sprite {
+        public int worldX, worldY ;
+        public int speed;
+        public BufferedImage up1, up2, down1, down2, right1, right2, left1, left2, idle1, idle2;
+        public String direction;
+
+        public int spriteCounter = 0;
+        public int spriteNumber = 1;
+
+        public Rectangle solidArea;
+        public boolean collisionOn = false;
+}
+\end{lstlisting}
+Voici la description des différentes variables:
+\begin{itemize}
+    \item \verb|worldX, worldY| : Position X et Y du sprite sur la carte
+    \item \verb|speed| : Vitesse du sprite sur la carte
+    \item \verb|up, down, right, left, idle| : Variables permettant d'utiliser les bonnes images en fonction de la direction
+    \item \verb|direction| : Direction du sprite parmis [up, down, left, right]
+    \item \verb|spriteCounter| : Compteur permettant d'actualiser les images pour l'animation
+    \item \verb|spriteNumber| : Permet de basculer entre les différentes images lors d'une animation
+    \item \verb|solidArea| : Hitbox du sprite
+    \item \verb|collisionOn| : Activation de la collision
+\end{itemize}
+
+\section{Class CollisionCheck}
+Cette classe permet de faire la gestion des collisions avec les différents sprite.
+
+\subsection{CollisionCheck}
+Constructeur pour définir le RenderEngine.
+
+\subsection{checkTile}
+
+\begin{lstlisting}[language=Java]
+public void checkTile(Sprite sprite){
+        int spriteLeftWorldX = sprite.worldX + sprite.solidArea.x;
+        int spriteRightWorldX = sprite.worldX + sprite.solidArea.x + sprite.solidArea.width;
+        int spriteTopWorldY = sprite.worldY + sprite.solidArea.y;
+        int spriteBottomWorldY = sprite.worldY + sprite.solidArea.y + sprite.solidArea.height;
+
+        int spriteLeftCol = spriteLeftWorldX/re.tileSize;
+        int spriteRightCol = spriteRightWorldX/re.tileSize;
+        int spriteTopRow = spriteTopWorldY/re.tileSize;
+        int spriteBottomRow = spriteBottomWorldY/re.tileSize;
+
+        int tileBottomNum1, tileBottomNum2, tileTopNum1, tileTopNum2;
+
+        switch(sprite.direction){
+            case "up":
+                spriteTopRow = (spriteTopWorldY - sprite.speed) / re.tileSize;
+                tileBottomNum1 =  re.tileM.mapBottomNum[spriteLeftCol][spriteTopRow];
+                tileBottomNum2 =  re.tileM.mapBottomNum[spriteRightCol][spriteTopRow];
+                tileTopNum1 =  re.tileM.mapTopNum[spriteLeftCol][spriteTopRow];
+                tileTopNum2 =  re.tileM.mapTopNum[spriteRightCol][spriteTopRow];
+
+                if(re.tileM.tile[tileBottomNum1].collision == true || re.tileM.tile[tileBottomNum2].collision == true ||
+                        re.tileM.tile[tileTopNum1].collision == true || re.tileM.tile[tileTopNum2].collision == true) {
+                    sprite.collisionOn = true;
+                }
+                break;
+            case "down":
+                spriteBottomRow = (spriteBottomWorldY + sprite.speed) / re.tileSize;
+                tileBottomNum1 =  re.tileM.mapBottomNum[spriteLeftCol][spriteBottomRow];
+                tileBottomNum2 =  re.tileM.mapBottomNum[spriteRightCol][spriteBottomRow];
+                tileTopNum1 =  re.tileM.mapTopNum[spriteLeftCol][spriteBottomRow];
+                tileTopNum2 =  re.tileM.mapTopNum[spriteRightCol][spriteBottomRow];
+
+                if(re.tileM.tile[tileBottomNum1].collision == true || re.tileM.tile[tileBottomNum2].collision == true ||
+                        re.tileM.tile[tileTopNum1].collision == true || re.tileM.tile[tileTopNum2].collision == true) {
+                    sprite.collisionOn = true;
+                }
+                break;
+            case "left":
+                spriteLeftCol = (spriteLeftWorldX - sprite.speed) / re.tileSize;
+                tileBottomNum1 = re.tileM.mapBottomNum[spriteLeftCol][spriteTopRow];
+                tileBottomNum2 = re.tileM.mapBottomNum[spriteLeftCol][spriteBottomRow];
+                tileTopNum1 = re.tileM.mapTopNum[spriteLeftCol][spriteTopRow];
+                tileTopNum2 = re.tileM.mapTopNum[spriteLeftCol][spriteBottomRow];
+
+                if(re.tileM.tile[tileBottomNum1].collision || re.tileM.tile[tileBottomNum2].collision ||
+                        re.tileM.tile[tileTopNum1].collision || re.tileM.tile[tileTopNum2].collision) {
+                    sprite.collisionOn = true;
+                }
+                break;
+            case "right":
+                spriteRightCol = (spriteRightWorldX + sprite.speed) / re.tileSize;
+                tileBottomNum1 = re.tileM.mapBottomNum[spriteRightCol][spriteTopRow];
+                tileBottomNum2 = re.tileM.mapBottomNum[spriteRightCol][spriteBottomRow];
+                tileTopNum1 = re.tileM.mapTopNum[spriteRightCol][spriteTopRow];
+                tileTopNum2 = re.tileM.mapTopNum[spriteRightCol][spriteBottomRow];
+
+                if(re.tileM.tile[tileBottomNum1].collision || re.tileM.tile[tileBottomNum2].collision ||
+                        re.tileM.tile[tileTopNum1].collision || re.tileM.tile[tileTopNum2].collision) {
+                    sprite.collisionOn = true;
+                }
+                break;
+        }
+    }
+\end{lstlisting}
+
+Cette méthode permet de déterminer si la hitbox touche une sprite de collision en fonction de la direction du joueur. Illustrons par un exemple:
+si le joueur va vers le haut (\verb|case "up"|), alors les deux coins supérieurs de la hitbox sera comparée au bas du sprite se situant en haut du joueur.
+Ensuite, si un de ces coins et le bas du sprite se touchent, il y a collision : \verb|sprite.collisionOn = true|
+
+\section{Tile}
+Cette classe permet de gérer l'affichage des cases ainsi que le comportement de celle-ci vis-à-vis du joueur. 
+La class Tile contient 4 variables:
+\begin{itemize}
+    \item \verb|image| : prends l'image correspondante
+    \item \verb|collision| : Permet de définir si l'image devra être une collision ou non
+    \item \verb|isOverhead| : Permet de définir si l'image devra être au dessus du joueur ou non, (cf. méthode draw de TileManager)
+    \item \verb|width, height| : Définit la taille de la case
+\end{itemize}
+
+\section{TileManager}
+Cette classe permet de gérer les sprites et de dessiner la map. Elle dessine en réalité deux maps se superposant: la première avec des sprites de background,
+la deuxième avec des sprites 'assets' de type objets / décorations, qui ne font pas 32x32 pixels.
+
+\subsection{TileManager}
+Cette méthode est le constructeur de la classe TileManager
+
+\begin{lstlisting}[language=Java]
+        public TileManager(RenderEngine re){
+        this.re = re;
+        tile = new Tile[100];
+        mapTopNum = new int[re.maxWorldCol][re.maxWorldRow];
+        mapBottomNum = new int[re.maxWorldCol][re.maxWorldRow];
+        getTileImage();
+        loadMap("/maps/village/village_bottom.txt", mapBottomNum);
+        loadMap("/maps/village/village_top.txt", mapTopNum);
+    }
+\end{lstlisting}
+
+\subsection{tileSetup}
+Cette méthode permet d'importer une sprite en une ligne plutôt que six, ce qui rendrait le code trop long.
+La sprite est paramétrée comme suit: son index, son path dans le projet, si c'est une sprite de collision et si c'est une sprite à dessiner au dessus du joueur.
+
+\begin{lstlisting}[language=Java]
+        public void tileSetup(int index, String filePath, boolean collision, boolean isOverhead) {
+        System.out.println("Attempting to load: " + filePath);
+        try {
+
+            //Debug
+//            if (getClass().getResourceAsStream(filePath) == null) {
+//                System.out.println("File not found: " + filePath);
+//            }
+            tile[index] = new Tile();
+            tile[index].image = ImageIO.read(getClass().getResourceAsStream(filePath));
+            tile[index].collision = collision;
+            tile[index].isOverhead = isOverhead;
+            tile[index].width = tile[index].image.getWidth();
+            tile[index].height = tile[index].image.getHeight();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+\end{lstlisting}
+
+\subsection{getTileImage}
+Cette classe agit comme une bibliothèque des sprites du jeu, qui sont instaurées avec la méthode \verb|tileSetup|.
+
+\begin{lstlisting}[language=Java]
+        public void getTileImage(){
+        /*Sprites du chemin*/
+        // LIGNES DROITES
+        tileSetup(0, "/background/Forest/chemin/Horiz.png", false, false);
+        tileSetup(1, "/background/Forest/chemin/Vertical.png", false, false);
+        // COINS / VIRAGES SIMPLES
+
+        ...
+\end{lstlisting}
+
+\subsection{loadMap}
+Cette classe permet de charger la map à partie d'un fichier \verb|.txt| qui contient 50 lignes de 50 nombres, chaque
+nombre correspondant à l'index d'une sprite.
+
+\begin{lstlisting}[language=Java]
+        public void loadMap(String mapPath, int mapNum[][]){
+
+        try{
+            InputStream is = getClass().getResourceAsStream(mapPath);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            int col = 0;
+            int row = 0;
+
+            while(col < re.maxWorldCol && row < re.maxWorldRow){
+                String line = br.readLine();
+                while(col < re.maxWorldCol){
+                    String numbers[] = line.split(" ");
+                    int num = Integer.parseInt(numbers[col]);
+                    mapNum[col][row] = num;
+                    col++;
+                }
+                if(col == re.maxWorldCol){
+                    col = 0;
+                    row ++;
+                }
+            }
+            br.close();
+        } catch (Exception e) {
+        }
+
+    }
+\end{lstlisting}
+
+\subsection{drawLayer}
+Cette méthode permet de desssiner la map, et ce en fonction des mouvements du joueur, qui reste au centre de la fenêtre de jeu
+pendant que les sprites se redessinent, pour créer la caméra du jeu.
+
+\begin{lstlisting}[language=Java]
+     public void drawLayer(Graphics2D g2, int mapNum[][], boolean not32, boolean isOverhead) {
+        int worldCol = 0;
+        int worldRow = 0;
+
+        try {
+            while (worldCol < re.maxWorldCol && worldRow < re.maxWorldRow) {
+                int tileNum = mapNum[worldCol][worldRow];
+
+                if(tile[tileNum] == null){
+                    System.out.println("Missing tile: " + tileNum +
+                            " at col=" + worldCol + " row=" + worldRow);}
+
+                if(tileNum != 99) {
+
+                    if (tile[tileNum].isOverhead == isOverhead) {
+
+                        boolean isLarge = (tile[tileNum].image.getWidth(null) > 32 ||
+                                tile[tileNum].image.getHeight(null) > 32);
+
+                        if (isLarge == not32) {
+                            int Width = tile[tileNum].image.getWidth(null);
+                            int Height = tile[tileNum].image.getHeight(null);
+                            int scaledWidth = Width * re.scale;
+                            int scaledHeight = Height * re.scale;
+                            int worldX = worldCol * re.tileSize;
+                            int worldY = worldRow * re.tileSize;
+
+                            /*Camera*/
+                            int screenX = worldX - re.player.worldX + re.player.screenX;
+                            int screenY = worldY - re.player.worldY + re.player.screenY;
+
+                            /*Drawing only sprites in the screen*/
+                            if (worldX > re.player.worldX - re.player.screenX - re.tileSize && worldX < re.player.worldX + re.player.screenX + re.tileSize
+                                    && worldY > re.player.worldY - re.player.screenY - re.tileSize && worldY < re.player.worldY + re.player.screenY + re.tileSize) {
+                                g2.drawImage(tile[tileNum].image, screenX, screenY, scaledWidth, scaledHeight, null);
+                            }
+                        }
+                    }
+                }
+                worldCol++;
+
+                if (worldCol == re.maxWorldCol) {
+                    worldCol = 0;
+                    worldRow++;
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+\end{lstlisting}
+
+\subsection{draw}
+Cette méthode permet de dessiner en superposant les deux maps, avec d'abord la map \verb|bottom| puis la map \verb|top|.
+
+
+\begin{lstlisting}[language=Java]
+    public void draw(Graphics2D g2, boolean isOverhead){
+        /*Code offered by the video tutorial, however it didn't work for sprites that weren't 32x32, it shrunk them or they were overdrawn by other sprites,
+        which iswhy I wrote drawLayer method*/
+        /*int x = 0;
+        int y = 0;
+
+        while(col < re.maxScreenCol && row < re.maxScreenRow){
+            int tileNum = mapTileNum[col][row];
+
+            g2.drawImage(tile[tileNum].image, x, y, re.tileSize, re.tileSize, null);
+            col++;
+            x += re.tileSize;
+
+            if(col == re.maxScreenCol){
+                col = 0;
+                x =0;
+                row++;
+                y += re.tileSize;
+            }*/
+
+        drawLayer(g2, mapBottomNum,false, isOverhead); /* Draws 32x32 background sprites first */
+        drawLayer(g2, mapBottomNum,true, isOverhead); /* Draws sprites of other dimensions */
+        drawLayer(g2, mapTopNum,false, isOverhead); /* Draws 32x32 background sprites first */
+        drawLayer(g2, mapTopNum,true, isOverhead); /* Draws sprites of other dimensions */
+        }
+    }
+\end{lstlisting}
+
+\end{document}
