@@ -16,8 +16,8 @@ public class RenderEngine extends JPanel implements Runnable{
     /*World settings*/
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-    public final int worldWidth = maxWorldCol * tileSize;
-    public final int worldHeight = maxWorldRow * tileSize;
+    //public final int worldWidth = maxWorldCol * tileSize;
+    //public final int worldHeight = maxWorldRow * tileSize;
 
     /*Setting frame rate to 60  FPS*/
     int FPS = 60;
@@ -27,7 +27,10 @@ public class RenderEngine extends JPanel implements Runnable{
     GameEngine keyH = new GameEngine();
     Thread gameThread; /*Starts a timer when program starts running, and stops when program stops running. Threads is why Runnable was implemented*/
     public CollisionCheck cCheck = new CollisionCheck(this);
+    public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
+    public SuperObject obj[] = new SuperObject[10];
+    public Text txt = new Text(this);
 
     public RenderEngine(){
         this.setPreferredSize(new Dimension(screenWidth , screenHeight));
@@ -36,6 +39,11 @@ public class RenderEngine extends JPanel implements Runnable{
         which should improve the game's graphic performances*/
         this.addKeyListener(keyH); /*Engine can recognize key input*/
         this.setFocusable(true );
+    }
+
+    public void setupGame(){
+
+        aSetter.setObject();
     }
 
     public void startGameThread(){
@@ -77,7 +85,9 @@ public class RenderEngine extends JPanel implements Runnable{
     }
 
     public void update(){
+
         player.update();
+        txt.update();
     }
 
     public void paintComponent(Graphics g){
@@ -86,8 +96,19 @@ public class RenderEngine extends JPanel implements Runnable{
 
         //tileM.draw(g2, false, true);
         tileM.draw(g2, false);
+
+        //Objects
+        for(int i = 0; i< obj.length; i++){
+            if(obj[i] != null){
+                obj[i].draw(g2,this);
+            }
+        }
+
         player.draw(g2);
         tileM.draw(g2, true);
+
+        txt.draw(g2);
+
         g2.dispose();
     }
 }

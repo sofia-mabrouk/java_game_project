@@ -71,4 +71,74 @@ public class CollisionCheck {
         }
     }
 
+    public int checkObject(Sprite sprite, boolean player){
+        int index = 999;
+
+        for(int i = 0; i<re.obj.length; i++){
+            if(re.obj[i] != null){
+                //Get entity's solid area position
+                sprite.solidArea.x = sprite.worldX + sprite.solidArea.x;
+                sprite.solidArea.y = sprite.worldY + sprite.solidArea.y;
+
+                //Get the object's solid area position
+                re.obj[i].solidArea.x = re.obj[i].worldX + re.obj[i].solidArea.x;
+                re.obj[i].solidArea.y = re.obj[i].worldY + re.obj[i].solidArea.y;
+
+                switch(sprite.direction){
+                    case "up":
+                        sprite.solidArea.y -= sprite.speed;
+                        if(sprite.solidArea.intersects(re.obj[i].solidArea)){
+                            if(re.obj[i].collision == true){
+                                sprite.collisionOn=true;
+                            }
+                            if(player == true){
+                                 index = i;
+                            }
+                        }
+                        break;
+                    case "down":
+                        sprite.solidArea.y += sprite.speed;
+                        if(sprite.solidArea.intersects(re.obj[i].solidArea)){
+                            if(re.obj[i].collision == true){
+                                sprite.collisionOn=true;
+                            }
+                            if(player == true){
+                                index = i;
+                            }
+                        }
+                        break;
+                    case "left":
+                        sprite.solidArea.x -= sprite.speed;
+                        if(sprite.solidArea.intersects(re.obj[i].solidArea)){
+                            if(re.obj[i].collision == true){
+                                sprite.collisionOn=true;
+                            }
+                            if(player == true){
+                                index = i;
+                            }
+                        }
+                        break;
+                    case "right":
+                        sprite.solidArea.x += sprite.speed;
+                        if(sprite.solidArea.intersects(re.obj[i].solidArea)){
+                            if(re.obj[i].collision == true){
+                                sprite.collisionOn=true;
+                            }
+                            if(player == true){
+                                index = i;
+                            }
+                        }
+                        break;
+                }
+                sprite.solidArea.x = sprite.solidAreaDefaultX;
+                sprite.solidArea.y = sprite.solidAreaDefaultY;
+                re.obj[i].solidArea.x = re.obj[i].solidAreaDefaultX;
+                re.obj[i].solidArea.y = re.obj[i].solidAreaDefaultY;
+
+            }
+        }
+
+        return index;
+    }
+
 }

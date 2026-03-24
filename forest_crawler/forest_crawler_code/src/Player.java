@@ -20,6 +20,8 @@ public class Player extends Sprite {
 
          //solidArea = new Rectangle(1/(6 * re.tileSize), 1/(3* re.tileSize), 2/(3 * re.tileSize), 2/(3 * re.tileSize));
         solidArea = new Rectangle(16, 30, 32, 32);
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
 
          setDefaultValues();
          getPlayerImage();
@@ -67,6 +69,9 @@ public class Player extends Sprite {
             /* Check tile collision*/
             collisionOn = false;
             re.cCheck.checkTile(this);
+            int objIndex = re.cCheck.checkObject(this, true);
+            pickUpObject(objIndex);
+
             if (collisionOn == false) {
                 switch (direction) {
                     case "up":
@@ -92,6 +97,23 @@ public class Player extends Sprite {
                     spriteNumber = 1;
                 }
                 spriteCounter = 0;
+            }
+
+        }
+    }
+
+    public void pickUpObject(int index){
+        if(index != 999){
+
+            String objectName = re.obj[index].name;
+
+            switch(objectName){
+                case "Axe":
+                    re.obj[index] = null;
+                    re.txt.showText("Gnome axe has been picked up!");
+                    break;
+                case "OBJ_OutRug":
+                    break;
             }
 
         }

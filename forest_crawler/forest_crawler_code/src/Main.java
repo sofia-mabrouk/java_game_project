@@ -11,13 +11,14 @@ public class Main {
         window.setResizable(false);
         window.setTitle("Forest Crawler");
 
-        RenderEngine renderEngine = new RenderEngine();
+        RenderEngine renderEngine = snew RenderEngine();
         window.add(renderEngine);
         window.pack(); /*Necessary line to see the window*/
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
+        renderEngine.setupGame();
         renderEngine.startGameThread();
     }
 }
