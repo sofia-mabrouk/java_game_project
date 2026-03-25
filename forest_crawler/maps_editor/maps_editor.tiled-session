@@ -3,38 +3,86 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "full_tileset.tsx",
+    "activeFile": "worldmap_top.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
+        "all_bg_sprites.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "full_tileset.tsx": {
             "dynamicWrapping": true,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "house.tmx": {
-            "scale": 0.70953125,
+            "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 801.2332085443736,
-                "y": 799.823827350804
+                "x": 801,
+                "y": 512
+            }
+        },
+        "tileset.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world_bottom.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1352,
+                "y": 1114
+            }
+        },
+        "world_map.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1558,
+                "y": 2494
+            }
+        },
+        "worldmap_bottom.tmx": {
+            "scale": 0.2133,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 897.796530707923,
+                "y": -911.8612283169246
+            }
+        },
+        "worldmap_top.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 914.3333333333333,
+                "y": 2478.333333333333
             }
         }
     },
     "last.exportedFilePath": "/home/sofia/Git/java_game_project/forest_crawler/maps",
     "last.imagePath": "/home/sofia/Git/java_game_project/forest_crawler/allsprites",
-    "map.height": 50,
+    "map.height": 130,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
     "map.width": 50,
     "openFiles": [
-        "house.tmx",
-        "full_tileset.tsx"
+        "tileset.tsx",
+        "worldmap_bottom.tmx",
+        "worldmap_top.tmx"
     ],
     "project": "maps_editor.tiled-project",
     "recentFiles": [
+        "tileset.tsx",
+        "worldmap_bottom.tmx",
+        "worldmap_top.tmx",
         "house.tmx",
+        "all_bg_sprites.tsx",
+        "world_bottom.tmx",
         "full_tileset.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",

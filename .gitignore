@@ -3,6 +3,10 @@
 
 # Log file
 *.log
+*.aux
+*.out
+*.toc
+*.synctex.gz
 
 # BlueJ files
 *.ctxt

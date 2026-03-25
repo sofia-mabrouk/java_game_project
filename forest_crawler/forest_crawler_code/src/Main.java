@@ -11,7 +11,7 @@ public class Main {
         window.setResizable(false);
         window.setTitle("Forest Crawler");
 
-        RenderEngine renderEngine = snew RenderEngine();
+        RenderEngine renderEngine = new RenderEngine();
         window.add(renderEngine);
         window.pack(); /*Necessary line to see the window*/
 

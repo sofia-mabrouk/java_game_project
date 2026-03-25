@@ -18,8 +18,8 @@ public class TileManager {
         mapTopNum = new int[re.maxWorldCol][re.maxWorldRow];
         mapBottomNum = new int[re.maxWorldCol][re.maxWorldRow];
         getTileImage();
-        loadMap("/maps/house/house_bottom.txt", mapBottomNum);
-        loadMap("/maps/house/house_top.txt", mapTopNum);
+        loadMap("/maps/worldmap_bottom.txt", mapBottomNum);
+        loadMap("/maps/worldmap_top.txt", mapTopNum);
     }
 
     public void tileSetup(int index, String filePath, boolean collision, boolean isOverhead) {
@@ -100,7 +100,7 @@ public class TileManager {
         tileSetup(49, "/background/Forest/buissons/Buisson.png", true, false);
         tileSetup(24, "/background/Forest/arbre/souche.png", true, true);
         tileSetup(25, "/background/Forest/arbre/tree_bas.png", true, false);
-        tileSetup(26, "/background/Forest/arbre/tree_haut.png", false, true);
+        tileSetup(26, "/background/Forest/arbre/tree_haut.png", true, true);
         tileSetup(50, "/background/Forest/arbre/tree_haut.png", true, true);
 
         /*Sprites maison*/
@@ -132,8 +132,8 @@ public class TileManager {
         tileSetup(48, "/background/Maisons/Maison_fleur/table_the.png", true, false);
 
         // CARRÉ NOIR & CARRÉ TRANSPARENT
-        tileSetup(51, "/background/black_sprite.png", false, false);
-        tileSetup(52, "/background/black_sprite.png", true, false);
+        tileSetup(51, "/background/black_sprite.png", true, false);
+        tileSetup(52, "/background/black_sprite.png", false, false);
         tileSetup(99, "/background/transparent.png", false, false);
 
         // INTÉRIEUR MAISON NAIN

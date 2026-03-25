@@ -28,8 +28,8 @@ public class Player extends Sprite {
     }
 
     public void setDefaultValues(){
-         worldX=  re.tileSize * 27;
-         worldY = re.tileSize * 25 ;
+         worldX=  re.tileSize * 23;
+         worldY = re.tileSize * 18 ;
          speed=4;
          direction="down";
     }
@@ -112,7 +112,18 @@ public class Player extends Sprite {
                     re.obj[index] = null;
                     re.txt.showText("Gnome axe has been picked up!");
                     break;
-                case "OBJ_OutRug":
+                case "OutRug":
+                    if(re.obj[0] == null){
+                        worldX=  re.tileSize * 35;
+                        worldY = re.tileSize * 44;
+                    }
+                    else{
+                        re.txt.showText("Pick up your axe!");
+                    }
+                    break;
+                case "HouseDoor":
+                    worldX=  re.tileSize * 23;
+                    worldY = re.tileSize * 18;
                     break;
             }
 
