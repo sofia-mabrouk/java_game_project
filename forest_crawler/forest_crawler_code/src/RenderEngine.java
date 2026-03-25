@@ -24,13 +24,17 @@ public class RenderEngine extends JPanel implements Runnable{
 
     /*Instances :*/
     TileManager tileM = new TileManager(this);
-    GameEngine keyH = new GameEngine();
+    GameEngine keyH = new GameEngine(this);
     Thread gameThread; /*Starts a timer when program starts running, and stops when program stops running. Threads is why Runnable was implemented*/
     public CollisionCheck cCheck = new CollisionCheck(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[10];
     public Text txt = new Text(this);
+
+    public int gameState;
+    public final int titleState = 0;
+    public final int playState = 1;
 
     public RenderEngine(){
         this.setPreferredSize(new Dimension(screenWidth , screenHeight));
@@ -44,6 +48,7 @@ public class RenderEngine extends JPanel implements Runnable{
     public void setupGame(){
 
         aSetter.setObject();
+        gameState = titleState;
     }
 
     public void startGameThread(){
@@ -85,30 +90,35 @@ public class RenderEngine extends JPanel implements Runnable{
     }
 
     public void update(){
-
-        player.update();
-        txt.update();
+        if(gameState == playState) {
+            player.update();
+            txt.update();
+        }
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        //tileM.draw(g2, false, true);
-        tileM.draw(g2, false);
-
-        //Objects
-        for(int i = 0; i< obj.length; i++){
-            if(obj[i] != null){
-                obj[i].draw(g2,this);
-            }
+        if(gameState == titleState){
+            txt.draw(g2);
         }
+        else{
+            //tileM.draw(g2, false, true);
+            tileM.draw(g2, false);
 
-        player.draw(g2);
-        tileM.draw(g2, true);
+            //Objects
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    obj[i].draw(g2, this);
+                }
+            }
 
-        txt.draw(g2);
+            player.draw(g2);
+            tileM.draw(g2, true);
 
+            txt.draw(g2);
+        }
         g2.dispose();
     }
 }

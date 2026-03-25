@@ -28,8 +28,8 @@ public class Player extends Sprite {
     }
 
     public void setDefaultValues(){
-         worldX=  re.tileSize * 23;
-         worldY = re.tileSize * 18 ;
+         worldX=  re.tileSize * 28;
+         worldY = re.tileSize * 15 ;
          speed=4;
          direction="down";
     }
@@ -44,6 +44,7 @@ public class Player extends Sprite {
             right2 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_d_walk2.png"));
             left1 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_q_walk1.png"));
             left2 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_q_walk2.png"));
+            portrait = ImageIO.read(getClass().getResourceAsStream("/portraits/gnome_p.png"));
 
         }catch(IOException e){
             e.printStackTrace();
@@ -184,8 +185,8 @@ public class Player extends Sprite {
 
         g2.drawImage(image, screenX, screenY, re.tileSize, re.tileSize, null);
 
-        // DEBUG: Draw the Hitbox
-        g2.setColor(Color.RED);
-        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+//        // DEBUG: Draw the Hitbox
+//        g2.setColor(Color.RED);
+//        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 }
