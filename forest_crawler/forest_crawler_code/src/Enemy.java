@@ -8,14 +8,17 @@ public class Enemy extends Sprite{
     RenderEngine re;
     GameEngine keyH;
     Player player;
+    public String perso;
+    public int stepCounter = 0;
 
     public int screenX;
     public int screenY;
 
-    public Enemy(RenderEngine re, GameEngine keyH, Player player){
+    public Enemy(RenderEngine re, GameEngine keyH, Player player, String personnage){
         this.re = re;
         this.keyH = keyH;
         this.player = player;
+        this.perso = personnage;
 
         screenX= re.screenWidth/2 - re.tileSize/2;
         screenY= re.screenWidth/2 - re.tileSize/2;
@@ -29,21 +32,42 @@ public class Enemy extends Sprite{
     public void setDefaultValues(){
         this.worldX = re.tileSize * 27;
         this.worldY = re.tileSize * 25 ;
-        this.speed=4;
+        this.speed=2;
         direction="down";
     }
 
     public void getEnemyImage() {
         try {
-            up1 =ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_qz_walk1.png"));
-            up2 =ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_qz_walk2.png"));
-            down1 =ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_ds_walk1.png"));
-            down2 =ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_ds_walk2.png"));
-            right1 =ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_qz_walk1.png"));
-            right2 =ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_qz_walk2.png"));
-            left1 =ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_ds_walk1.png"));
-            left2 =ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_ds_walk2.png"));
-
+            if (perso == "sardine") {
+                up1 = ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_qz_walk1.png"));
+                up2 = ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_qz_walk2.png"));
+                down1 = ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_ds_walk1.png"));
+                down2 = ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_ds_walk2.png"));
+                right1 = ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_qz_walk1.png"));
+                right2 = ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_qz_walk2.png"));
+                left1 = ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_ds_walk1.png"));
+                left2 = ImageIO.read(getClass().getResourceAsStream("/characters/sardine/walk/sardine_ds_walk2.png"));
+            }
+            if (perso == "fleur") {
+                up1 = ImageIO.read(getClass().getResourceAsStream("/characters/fleur/walk/flower_z_walk1.png"));
+                up2 = ImageIO.read(getClass().getResourceAsStream("/characters/fleur/walk/flower_z_walk2.png"));
+                down1 = ImageIO.read(getClass().getResourceAsStream("/characters/fleur/walk/flower_qs_walk1.png"));
+                down2 = ImageIO.read(getClass().getResourceAsStream("/characters/fleur/walk/flower_qs_walk2.png"));
+                right1 = ImageIO.read(getClass().getResourceAsStream("/characters/fleur/walk/flower_d_walk1.png"));
+                right2 = ImageIO.read(getClass().getResourceAsStream("/characters/fleur/walk/flower_d_walk2.png"));
+                left1 = ImageIO.read(getClass().getResourceAsStream("/characters/fleur/walk/flower_qs_walk1.png"));
+                left2 = ImageIO.read(getClass().getResourceAsStream("/characters/fleur/walk/flower_qs_walk2.png"));
+            }
+            if (perso == "pingouin") {
+                up1 = ImageIO.read(getClass().getResourceAsStream("/characters/pingouin/walk/pingouin_z_walk1.png"));
+                up2 = ImageIO.read(getClass().getResourceAsStream("/characters/pingouin/walk/pingouin_z_walk3.png"));
+                down1 = ImageIO.read(getClass().getResourceAsStream("/characters/pingouin/walk/pingouin_s_walk1.png"));
+                down2 = ImageIO.read(getClass().getResourceAsStream("/characters/pingouin/walk/pingouin_s_walk3.png"));
+                right1 = ImageIO.read(getClass().getResourceAsStream("/characters/pingouin/walk/pingouin_d_walk1.png"));
+                right2 = ImageIO.read(getClass().getResourceAsStream("/characters/pingouin/walk/pingouin_d_walk2.png"));
+                left1 = ImageIO.read(getClass().getResourceAsStream("/characters/pingouin/walk/pingouin_q_walk1.png"));
+                left2 = ImageIO.read(getClass().getResourceAsStream("/characters/pingouin/walk/pingouin_q_walk2.png"));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,21 +76,8 @@ public class Enemy extends Sprite{
     public void update(){
         if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed){
 
-            if (keyH.upPressed) {
-                direction = "up";
-            }
-            if (keyH.downPressed) {
-                direction = "down";
-            }
-            if (keyH.leftPressed) {
-                direction = "left";
-            }
-            if (keyH.rightPressed) {
-                direction = "right";
-            }
-
             if (player.collisionOn == false) {
-                switch (direction) {
+                switch (player.direction) {
                     case "up":
                         this.screenY += speed;
                         break;
@@ -91,6 +102,50 @@ public class Enemy extends Sprite{
                 spriteNumber = 1;
             }
             spriteCounter = 0;
+        }
+
+        switch (direction) {
+            case "up":
+                this.screenY -= speed;
+                stepCounter++;
+                break;
+            case "down":
+                this.screenY += speed;
+                stepCounter++;
+                break;
+            case "left":
+                this.screenX -= speed;
+                stepCounter++;
+                break;
+            case "right":
+                this.screenX += speed;
+                stepCounter++;
+                break;
+        }
+
+        if (stepCounter > 50){
+            stepCounter = 0;
+            switch (direction) {
+                case "up":
+                    direction = "left";
+                    break;
+                case "down":
+                    direction = "right";
+                    break;
+                case "left":
+                    direction = "down";
+                    break;
+                case "right":
+                    direction = "up";
+                    break;
+            }
+        }
+
+        if (stepCounter >= 25){
+            speed = 0;
+        }
+        else {
+            speed= 2;
         }
     }
 

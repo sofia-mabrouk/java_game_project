@@ -28,7 +28,7 @@ public class RenderEngine extends JPanel implements Runnable{
     Thread gameThread; /*Starts a timer when program starts running, and stops when program stops running. Threads is why Runnable was implemented*/
     public CollisionCheck cCheck = new CollisionCheck(this);
     public Player player = new Player(this, keyH);
-    public Enemy enemy = new Enemy(this, keyH, player);
+    public Enemy enemy = new Enemy(this, keyH, player, "sardine");
 
     public RenderEngine(){
         this.setPreferredSize(new Dimension(screenWidth , screenHeight));
