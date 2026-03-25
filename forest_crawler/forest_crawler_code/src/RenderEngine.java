@@ -28,6 +28,7 @@ public class RenderEngine extends JPanel implements Runnable{
     Thread gameThread; /*Starts a timer when program starts running, and stops when program stops running. Threads is why Runnable was implemented*/
     public CollisionCheck cCheck = new CollisionCheck(this);
     public Player player = new Player(this, keyH);
+    public Enemy enemy = new Enemy(this, keyH, player);
 
     public RenderEngine(){
         this.setPreferredSize(new Dimension(screenWidth , screenHeight));
@@ -78,6 +79,7 @@ public class RenderEngine extends JPanel implements Runnable{
 
     public void update(){
         player.update();
+        enemy.update();
     }
 
     public void paintComponent(Graphics g){
@@ -87,6 +89,7 @@ public class RenderEngine extends JPanel implements Runnable{
         //tileM.draw(g2, false, true);
         tileM.draw(g2, false);
         player.draw(g2);
+        enemy.draw(g2);
         tileM.draw(g2, true);
         g2.dispose();
     }

@@ -26,9 +26,9 @@ public class Player extends Sprite {
     }
 
     public void setDefaultValues(){
-         worldX=  re.tileSize * 27;
-         worldY = re.tileSize * 25 ;
-         speed=4;
+         this.worldX=  re.tileSize * 27;
+         this.worldY = re.tileSize * 25 ;
+         this.speed=4;
          direction="down";
     }
 
@@ -70,16 +70,16 @@ public class Player extends Sprite {
             if (collisionOn == false) {
                 switch (direction) {
                     case "up":
-                        worldY -= speed;
+                        this.worldY -= speed;
                         break;
                     case "down":
-                        worldY += speed;
+                        this.worldY += speed;
                         break;
                     case "left":
-                        worldX -= speed;
+                        this.worldX -= speed;
                         break;
                     case "right":
-                        worldX += speed;
+                        this.worldX += speed;
                         break;
                 }
             }
