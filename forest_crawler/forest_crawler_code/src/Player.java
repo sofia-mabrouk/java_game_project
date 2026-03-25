@@ -51,7 +51,7 @@ public class Player extends Sprite {
     }
 
     public void update(){
-        if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+        if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed || keyH.spacePressed) {
 
             if (keyH.upPressed) {
                 direction = "up";
@@ -65,6 +65,8 @@ public class Player extends Sprite {
             if (keyH.rightPressed) {
                 direction = "right";
             }
+            if (keyH.rightPressed) {
+            }
 
             /* Check tile collision*/
             collisionOn = false;
@@ -72,20 +74,23 @@ public class Player extends Sprite {
             int objIndex = re.cCheck.checkObject(this, true);
             pickUpObject(objIndex);
 
-            if (collisionOn == false) {
-                switch (direction) {
-                    case "up":
-                        worldY -= speed;
-                        break;
-                    case "down":
-                        worldY += speed;
-                        break;
-                    case "left":
-                        worldX -= speed;
-                        break;
-                    case "right":
-                        worldX += speed;
-                        break;
+            if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+
+                if (collisionOn == false) {
+                    switch (direction) {
+                        case "up":
+                            worldY -= speed;
+                            break;
+                        case "down":
+                            worldY += speed;
+                            break;
+                        case "left":
+                            worldX -= speed;
+                            break;
+                        case "right":
+                            worldX += speed;
+                            break;
+                    }
                 }
             }
 
@@ -109,21 +114,28 @@ public class Player extends Sprite {
 
             switch(objectName){
                 case "Axe":
-                    re.obj[index] = null;
-                    re.txt.showText("Gnome axe has been picked up!");
+                    re.txt.showText("Press SPACE to interact");
+                    if(keyH.spacePressed) {
+                        re.obj[index] = null;
+                        re.txt.showText("Gnome axe has been picked up!");
+                    }
                     break;
                 case "OutRug":
                     if(re.obj[0] == null){
-                        worldX=  re.tileSize * 35;
-                        worldY = re.tileSize * 44;
+                        if(keyH.spacePressed) {
+                            worldX = re.tileSize * 35;
+                            worldY = re.tileSize * 44;
+                        }
                     }
                     else{
                         re.txt.showText("Pick up your axe!");
                     }
                     break;
                 case "HouseDoor":
-                    worldX=  re.tileSize * 23;
-                    worldY = re.tileSize * 18;
+                    if(keyH.spacePressed) {
+                        worldX = re.tileSize * 23;
+                        worldY = re.tileSize * 18;
+                    }
                     break;
             }
 
