@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Enemy extends Sprite{
+public class Enemy extends Sprite {
 
     RenderEngine re;
     GameEngine keyH;
@@ -11,17 +11,17 @@ public class Enemy extends Sprite{
     public String perso;
     public int stepCounter = 0;
 
-    public int screenX;
-    public int screenY;
+    public int screenX=0;
+    public int screenY=0;
 
-    public Enemy(RenderEngine re, GameEngine keyH, Player player, String personnage){
+    public Enemy(RenderEngine re, GameEngine keyH, Player player, String personnage) {
         this.re = re;
         this.keyH = keyH;
         this.player = player;
         this.perso = personnage;
 
-        screenX= re.screenWidth/2 - re.tileSize/2;
-        screenY= re.screenWidth/2 - re.tileSize/2;
+        screenX = /*re.screenWidth /15*/ 0 -re.screenWidth/3;
+        screenY = re.screenHeight*4;
 
         solidArea = new Rectangle(16, 30, 32, 32);
 
@@ -29,11 +29,11 @@ public class Enemy extends Sprite{
         getEnemyImage();
     }
 
-    public void setDefaultValues(){
-        this.worldX = re.tileSize * 27;
-        this.worldY = re.tileSize * 150;
-        this.speed=4;
-        direction="down";
+    public void setDefaultValues() {
+        this.worldX = re.tileSize * 25;
+        this.worldY = re.tileSize * 25;
+        this.speed = 3;
+        direction = "down";
     }
 
     public void getEnemyImage() {
@@ -73,8 +73,8 @@ public class Enemy extends Sprite{
         }
     }
 
-    public void update(){
-        if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed){
+    public void update() {
+        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
             if (player.collisionOn == false) {
                 switch (player.direction) {
                     case "up":
@@ -163,7 +163,7 @@ public class Enemy extends Sprite{
                         break;
                 }
 
-                if (stepCounter > 25){
+                if (stepCounter > 60) {
                     stepCounter = 0;
                     switch (direction) {
                         case "up":
@@ -194,7 +194,7 @@ public class Enemy extends Sprite{
             spriteCounter = 0;
         }
 
-        if (!(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) || player.collisionOn){
+        if (!(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) || player.collisionOn) {
             switch (direction) {
                 case "up":
                     this.screenY -= speed;
@@ -213,61 +213,61 @@ public class Enemy extends Sprite{
                     stepCounter++;
                     break;
             }
-                if (stepCounter > 25){
-                    stepCounter = 0;
-                    switch (direction) {
-                        case "up":
-                            direction = "left";
-                            break;
-                        case "down":
-                            direction = "right";
-                            break;
-                        case "left":
-                            direction = "down";
-                            break;
-                        case "right":
-                            direction = "up";
-                            break;
-                    }
+            if (stepCounter > 60) {
+                stepCounter = 0;
+                switch (direction) {
+                    case "up":
+                        direction = "left";
+                        break;
+                    case "down":
+                        direction = "right";
+                        break;
+                    case "left":
+                        direction = "down";
+                        break;
+                    case "right":
+                        direction = "up";
+                        break;
                 }
             }
+        }
     }
 
-    public void draw(Graphics2D g2){
+    public void draw(Graphics2D g2) {
 
         BufferedImage image = null;
 
-        switch(direction) {
+        switch (direction) {
             case "up":
-                if (spriteNumber == 1){
+                if (spriteNumber == 1) {
                     image = up1;
                 }
-                if (spriteNumber == 2){
+                if (spriteNumber == 2) {
                     image = up2;
                 }
                 break;
             case "down":
-                if (spriteNumber == 1){
+                if (spriteNumber == 1) {
                     image = down1;
                 }
-                if (spriteNumber == 2){
+                if (spriteNumber == 2) {
                     image = down2;
                 }
                 break;
             case "right":
-                if (spriteNumber == 1){
+                if (spriteNumber == 1) {
                     image = right1;
                 }
-                if (spriteNumber == 2){
+                if (spriteNumber == 2) {
                     image = right2;
                 }
                 break;
             case "left":
-                if (spriteNumber == 1){
+                if (spriteNumber == 1) {
                     image = left1;
                 }
-                if (spriteNumber == 2){
-                    image = left2 ;
+                if (spriteNumber == 2) {
+                    image = left2;
                 }
                 break;
         }
@@ -275,8 +275,7 @@ public class Enemy extends Sprite{
         g2.drawImage(image, screenX, screenY, re.tileSize, re.tileSize, null);
 
         // DEBUG: Draw the Hitbox
-        g2.setColor(Color.RED);
-        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+//        g2.setColor(Color.RED);
+//        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
-
 }

@@ -30,7 +30,7 @@ public class Player extends Sprite {
     public void setDefaultValues(){
          worldX=  re.tileSize * 28;
          worldY = re.tileSize * 15 ;
-         speed=4;
+         speed=3;
          direction="down";
     }
 
