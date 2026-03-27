@@ -31,7 +31,7 @@ public class Enemy extends Sprite{
 
     public void setDefaultValues(){
         this.worldX = re.tileSize * 27;
-        this.worldY = re.tileSize * 25;
+        this.worldY = re.tileSize * 150;
         this.speed=4;
         direction="down";
     }
@@ -193,7 +193,8 @@ public class Enemy extends Sprite{
             }
             spriteCounter = 0;
         }
-        if (!keyH.upPressed && !keyH.downPressed && !keyH.leftPressed && !keyH.rightPressed) {
+
+        if (!(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) || player.collisionOn){
             switch (direction) {
                 case "up":
                     this.screenY -= speed;

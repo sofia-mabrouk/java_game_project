@@ -20,15 +20,17 @@ public class Player extends Sprite {
 
          //solidArea = new Rectangle(1/(6 * re.tileSize), 1/(3* re.tileSize), 2/(3 * re.tileSize), 2/(3 * re.tileSize));
         solidArea = new Rectangle(16, 30, 32, 32);
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
 
          setDefaultValues();
          getPlayerImage();
     }
 
     public void setDefaultValues(){
-         this.worldX=  re.tileSize * 27;
-         this.worldY = re.tileSize * 55 ;
-         this.speed=4;
+         worldX=  re.tileSize * 28;
+         worldY = re.tileSize * 15 ;
+         speed=4;
          direction="down";
     }
 
@@ -42,6 +44,7 @@ public class Player extends Sprite {
             right2 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_d_walk2.png"));
             left1 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_q_walk1.png"));
             left2 = ImageIO.read(getClass().getResourceAsStream("/characters/gnome/walk/gnome_q_walk2.png"));
+            portrait = ImageIO.read(getClass().getResourceAsStream("/portraits/gnome_p.png"));
 
         }catch(IOException e){
             e.printStackTrace();
@@ -49,7 +52,7 @@ public class Player extends Sprite {
     }
 
     public void update(){
-        if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+        if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed || keyH.spacePressed) {
 
             if (keyH.upPressed) {
                 direction = "up";
@@ -63,24 +66,32 @@ public class Player extends Sprite {
             if (keyH.rightPressed) {
                 direction = "right";
             }
+            if (keyH.spacePressed) {
+            }
 
             /* Check tile collision*/
             collisionOn = false;
             re.cCheck.checkTile(this);
-            if (collisionOn == false) {
-                switch (direction) {
-                    case "up":
-                        this.worldY -= speed;
-                        break;
-                    case "down":
-                        this.worldY += speed;
-                        break;
-                    case "left":
-                        this.worldX -= speed;
-                        break;
-                    case "right":
-                        this.worldX += speed;
-                        break;
+            int objIndex = re.cCheck.checkObject(this, true);
+            pickUpObject(objIndex);
+
+            if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+
+                if (collisionOn == false) {
+                    switch (direction) {
+                        case "up":
+                            worldY -= speed;
+                            break;
+                        case "down":
+                            worldY += speed;
+                            break;
+                        case "left":
+                            worldX -= speed;
+                            break;
+                        case "right":
+                            worldX += speed;
+                            break;
+                    }
                 }
             }
 
@@ -92,6 +103,41 @@ public class Player extends Sprite {
                     spriteNumber = 1;
                 }
                 spriteCounter = 0;
+            }
+
+        }
+    }
+
+    public void pickUpObject(int index){
+        if(index != 999){
+
+            String objectName = re.obj[index].name;
+
+            switch(objectName){
+                case "Axe":
+                    re.txt.showText("Press SPACE to interact");
+                    if(keyH.spacePressed) {
+                        re.obj[index] = null;
+                        re.txt.showText("Gnome axe has been picked up!");
+                    }
+                    break;
+                case "OutRug":
+                    if(re.obj[0] == null){
+                        if(keyH.spacePressed) {
+                            worldX = re.tileSize * 35;
+                            worldY = re.tileSize * 44;
+                        }
+                    }
+                    else{
+                        re.txt.showText("Pick up your axe!");
+                    }
+                    break;
+                case "HouseDoor":
+                    if(keyH.spacePressed) {
+                        worldX = re.tileSize * 23;
+                        worldY = re.tileSize * 18;
+                    }
+                    break;
             }
 
         }
@@ -139,8 +185,8 @@ public class Player extends Sprite {
 
         g2.drawImage(image, screenX, screenY, re.tileSize, re.tileSize, null);
 
-        // DEBUG: Draw the Hitbox
-        g2.setColor(Color.RED);
-        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+//        // DEBUG: Draw the Hitbox
+//        g2.setColor(Color.RED);
+//        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 }
