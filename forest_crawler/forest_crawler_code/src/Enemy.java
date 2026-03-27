@@ -31,8 +31,8 @@ public class Enemy extends Sprite{
 
     public void setDefaultValues(){
         this.worldX = re.tileSize * 27;
-        this.worldY = re.tileSize * 25 ;
-        this.speed=2;
+        this.worldY = re.tileSize * 25;
+        this.speed=4;
         direction="down";
     }
 
@@ -75,23 +75,113 @@ public class Enemy extends Sprite{
 
     public void update(){
         if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed){
-
             if (player.collisionOn == false) {
                 switch (player.direction) {
                     case "up":
                         this.screenY += speed;
+                        switch (direction) {
+                            case "up":
+                                this.screenY -= player.speed;
+                                stepCounter++;
+                                break;
+                            case "down":
+                                this.screenY += player.speed;
+                                stepCounter++;
+                                break;
+                            case "left":
+                                this.screenX -= player.speed;
+                                stepCounter++;
+                                break;
+                            case "right":
+                                this.screenX += player.speed;
+                                stepCounter++;
+                                break;
+                        }
                         break;
                     case "down":
                         this.screenY -= speed;
+                        switch (direction) {
+                            case "up":
+                                this.screenY -= player.speed;
+                                stepCounter++;
+                                break;
+                            case "down":
+                                this.screenY += player.speed;
+                                stepCounter++;
+                                break;
+                            case "left":
+                                this.screenX -= player.speed;
+                                stepCounter++;
+                                break;
+                            case "right":
+                                this.screenX += player.speed;
+                                stepCounter++;
+                                break;
+                        }
                         break;
                     case "left":
                         this.screenX += speed;
+                        switch (direction) {
+                            case "up":
+                                this.screenY -= player.speed;
+                                stepCounter++;
+                                break;
+                            case "down":
+                                this.screenY += player.speed;
+                                stepCounter++;
+                                break;
+                            case "left":
+                                this.screenX -= player.speed;
+                                stepCounter++;
+                                break;
+                            case "right":
+                                this.screenX += player.speed;
+                                stepCounter++;
+                                break;
+                        }
                         break;
                     case "right":
                         this.screenX -= speed;
+                        switch (direction) {
+                            case "up":
+                                this.screenY -= player.speed;
+                                stepCounter++;
+                                break;
+                            case "down":
+                                this.screenY += player.speed;
+                                stepCounter++;
+                                break;
+                            case "left":
+                                this.screenX -= player.speed;
+                                stepCounter++;
+                                break;
+                            case "right":
+                                this.screenX += player.speed;
+                                stepCounter++;
+                                break;
+                        }
                         break;
                 }
+
+                if (stepCounter > 25){
+                    stepCounter = 0;
+                    switch (direction) {
+                        case "up":
+                            direction = "left";
+                            break;
+                        case "down":
+                            direction = "right";
+                            break;
+                        case "left":
+                            direction = "down";
+                            break;
+                        case "right":
+                            direction = "up";
+                            break;
+                    }
+                }
             }
+
         }
 
         spriteCounter++;
@@ -103,50 +193,43 @@ public class Enemy extends Sprite{
             }
             spriteCounter = 0;
         }
-
-        switch (direction) {
-            case "up":
-                this.screenY -= speed;
-                stepCounter++;
-                break;
-            case "down":
-                this.screenY += speed;
-                stepCounter++;
-                break;
-            case "left":
-                this.screenX -= speed;
-                stepCounter++;
-                break;
-            case "right":
-                this.screenX += speed;
-                stepCounter++;
-                break;
-        }
-
-        if (stepCounter > 50){
-            stepCounter = 0;
+        if (!keyH.upPressed && !keyH.downPressed && !keyH.leftPressed && !keyH.rightPressed) {
             switch (direction) {
                 case "up":
-                    direction = "left";
+                    this.screenY -= speed;
+                    stepCounter++;
                     break;
                 case "down":
-                    direction = "right";
+                    this.screenY += speed;
+                    stepCounter++;
                     break;
                 case "left":
-                    direction = "down";
+                    this.screenX -= speed;
+                    stepCounter++;
                     break;
                 case "right":
-                    direction = "up";
+                    this.screenX += speed;
+                    stepCounter++;
                     break;
             }
-        }
-
-        if (stepCounter >= 25){
-            speed = 0;
-        }
-        else {
-            speed= 2;
-        }
+                if (stepCounter > 25){
+                    stepCounter = 0;
+                    switch (direction) {
+                        case "up":
+                            direction = "left";
+                            break;
+                        case "down":
+                            direction = "right";
+                            break;
+                        case "left":
+                            direction = "down";
+                            break;
+                        case "right":
+                            direction = "up";
+                            break;
+                    }
+                }
+            }
     }
 
     public void draw(Graphics2D g2){

@@ -18,8 +18,8 @@ public class TileManager {
         mapTopNum = new int[re.maxWorldCol][re.maxWorldRow];
         mapBottomNum = new int[re.maxWorldCol][re.maxWorldRow];
         getTileImage();
-        loadMap("/maps/house/house_bottom.txt", mapBottomNum);
-        loadMap("/maps/house/house_top.txt", mapTopNum);
+        loadMap("/maps/worldmap_bottom.txt", mapBottomNum);
+        loadMap("/maps/worldmap_top.txt", mapTopNum);
     }
 
     public void tileSetup(int index, String filePath, boolean collision, boolean isOverhead) {

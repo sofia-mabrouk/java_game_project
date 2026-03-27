@@ -15,7 +15,7 @@ public class RenderEngine extends JPanel implements Runnable{
 
     /*World settings*/
     public final int maxWorldCol = 50;
-    public final int maxWorldRow = 50;
+    public final int maxWorldRow = 130;
     public final int worldWidth = maxWorldCol * tileSize;
     public final int worldHeight = maxWorldRow * tileSize;
 
